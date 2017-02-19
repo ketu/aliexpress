@@ -57,7 +57,7 @@ abstract class RequestAbstract
 
     public function getIsStreamRequest()
     {
-        return $this->getIsStreamRequest();
+        return $this->isStreamRequest;
     }
 
     public function withFile($file)

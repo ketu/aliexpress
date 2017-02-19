@@ -10,12 +10,17 @@ namespace Veda\Aliexpress\Request\Message;
 
 use Veda\Aliexpress\RequestAbstract;
 
+
+/**
+ * Class Create
+ * @package Veda\Aliexpress\Request\Message
+ * @desc 新增站内信/订单留言
+ */
 class Create extends RequestAbstract
 {
     public function getMethod()
     {
         return 'api.addMsg';
     }
-
 
 }
