@@ -70,7 +70,7 @@ class Config
 
         $arguments['access_token'] = $this->getAccessToken();
         //$this->api = $api;
-        return $this->buildUrl(self::API_ENDPOINT . $apiMethod . '/', $apiMethod, $arguments);
+        return $this->buildUrl(self::API_ENDPOINT, $apiMethod, $arguments);
     }
 
     public function __clone()
