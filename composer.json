@@ -1,0 +1,32 @@
+{
+    "name": "veda/aliexpress",
+    "description": "a simple php wrapper for aliexpress api",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ketu",
+            "email": "ketu.lai@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.6",
+        "guzzlehttp/guzzle": "^6.2"
+    },
+ 	"autoload": {
+        "psr-4": {"Veda\\Aliexpress\\": "src/Veda/Aliexpress"}
+    },
+    "autoload-dev": {
+        "psr-4": {"Veda\\Aliexpress\\Tests\\": "tests/"}
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    }
+}
