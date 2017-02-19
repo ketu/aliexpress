@@ -9,8 +9,8 @@
 namespace Veda\Aliexpress;
 
 use GuzzleHttp\Client as HttpClient;
-
 use GuzzleHttp\Exception\ClientException;
+use Veda\Aliexpress\Exception\ResponseException;
 
 class Client
 {
@@ -59,10 +59,10 @@ class Client
             if (!isset($responseObject['error_code'])) {
                 return $responseObject;
             }
+
         } catch (ClientException $e) {
-            throw new \Exception(sprintf('AliExpress API %s, client ID: %s, Request need user authorized', $this->getRequest()->getUrl(), $this->getRequest()->getConfig()->getClientId(), $e->getMessage()));
+            throw new ResponseException($e->getMessage(), $e->getResponse());
         }
-        throw new \Exception(sprintf('AliExpress API %s, error code: %s, error message: %s ', $this->getRequest()->getUri(), $responseObject['error_code'], $responseObject['error_message']));
 
     }
 

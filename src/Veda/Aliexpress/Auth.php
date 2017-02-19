@@ -9,6 +9,8 @@
 namespace Veda\Aliexpress;
 
 use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\Exception\ClientException;
+use Veda\Aliexpress\Exception\ResponseException;
 use Veda\Aliexpress\Utils\UrlTrait;
 
 class Auth
@@ -192,27 +194,30 @@ class Auth
             'refresh_token' => $this->getRefreshToken(),
         ];
 
+        try {
 
-        $httpClient = new HttpClient();
 
-        $response = $httpClient->request('POST', $refreshTokenUrl,  ['form_params' => $postData]);
+            $httpClient = new HttpClient();
 
-        if ($response->getStatusCode() == 200) {
+            $response = $httpClient->request('POST', $refreshTokenUrl, ['form_params' => $postData]);
 
-            $tokenData = json_decode($response->getBody()->__toString(), true);
+            if ($response->getStatusCode() == 200) {
 
-            if ($onlyAccessToken) {
-                return $tokenData['access_token'];
+                $tokenData = json_decode($response->getBody()->__toString(), true);
+
+                if ($onlyAccessToken) {
+                    return $tokenData['access_token'];
+                }
+
+                $dateTime = new \DateTime();
+
+                $tokenData['expires_in'] = $dateTime->getTimestamp() + (int)$tokenData['expires_in'];
+
+                return $tokenData;
             }
-
-            $dateTime = new \DateTime();
-
-            $tokenData['expires_in'] = $dateTime->getTimestamp() + (int)$tokenData['expires_in'];
-
-            return $tokenData;
+        }catch (ClientException $e) {
+            throw new ResponseException($e->getMessage(), $e->getResponse());
         }
-
-        throw new \Exception(sprintf('AliExpress get access token by refresh token, error code: %s, error message: %s ', $response->getStatusCode(), $response->getBody()));
 
     }
 

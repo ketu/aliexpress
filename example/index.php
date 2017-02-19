@@ -13,22 +13,34 @@ require 'config.php';
 
 $accessToken = 'xxx';
 
+try {
 
-$auth = new Veda\Aliexpress\Auth($clientId, $clientSecret);
+    $auth = new Veda\Aliexpress\Auth($clientId, $clientSecret);
 
-$authUrl = $auth->getAuthenticateUrl(['redirect_uri'=> 'http://127.0.0.1', 'state'=> 1]);
-echo $authUrl;
-
-
-
-$config = new Veda\Aliexpress\Config($clientId, $clientSecret, $accessToken);
+    $authUrl = $auth->getAuthenticateUrl(['redirect_uri' => 'http://127.0.0.1', 'state' => 1]);
 
 
-$request = new Veda\Aliexpress\Request\Message\Create($config);
+    header("Location:".$authUrl);
+    exit();
+    $config = new Veda\Aliexpress\Config($clientId, $clientSecret, $accessToken);
+    $request = new Veda\Aliexpress\Request\Message\Create($config);
+
+    $request->setXXX("asjdflksa");
+
+    $client = new Veda\Aliexpress\Client($request);
+
+    $client->send($request);
+
+}catch (Veda\Aliexpress\Exception\ResponseException $e) {
+    echo $e->getMessage();
+    #echo $e->getResponse()->getStatusCode();
+}
 
 
-$request->setXXX("asjdflksa");
+/*
 
-$client = new Veda\Aliexpress\Client($request);
 
-$client->send($request);
+
+
+
+*/
